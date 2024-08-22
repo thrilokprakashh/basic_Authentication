@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:validation_wrk/view/registration/registration.dart';
+import 'package:validation_wrk/view/login_page/login_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class Registration extends StatefulWidget {
+  const Registration({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<Registration> createState() => _RegistrationState();
 }
 
 final _formKey = GlobalKey<FormState>();
 final _emailController = TextEditingController();
 final _passwordController = TextEditingController();
+final _confirmPasswordController = TextEditingController();
 
-class _LoginPageState extends State<LoginPage> {
+class _RegistrationState extends State<Registration> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-          size: 25,
-        ),
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
@@ -35,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 40,
                 ),
                 Text(
-                  "Sign in to Your Account",
+                  "Sign Up for Free",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                 ),
                 SizedBox(
@@ -61,8 +56,8 @@ class _LoginPageState extends State<LoginPage> {
                             if (!value.contains('@')) {
                               return 'Please enter a valid email address';
                             }
-                            return null;
                           }
+                          return null;
                         },
                       ),
                     ),
@@ -105,23 +100,38 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 Row(
                   children: [
-                    Icon(Icons.check_box_outlined, color: Colors.black45),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "Remember Me",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Spacer(),
-                    Text(
-                      "Forgot Password",
-                      style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: TextFormField(
+                        controller: _confirmPasswordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: "Your Confirm Password",
+                          labelStyle: TextStyle(color: Colors.black54),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.black38),
+                          ),
+                          suffixIcon: Icon(
+                            Icons.visibility_off_outlined,
+                            color: Colors.black38,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          {
+                            if (value != _passwordController.text) {
+                              return 'Mismatched';
+                            }
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -133,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                     backgroundColor: WidgetStatePropertyAll(Colors.blue),
                     foregroundColor: WidgetStatePropertyAll(Colors.white),
                     padding: WidgetStatePropertyAll(
-                      EdgeInsets.symmetric(horizontal: 160, vertical: 15),
+                      EdgeInsets.symmetric(horizontal: 156, vertical: 15),
                     ),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
@@ -145,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (_formKey.currentState!.validate()) {}
                   },
                   child: Text(
-                    "Sign in",
+                    "Sign Up",
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
@@ -154,20 +164,20 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Dont have an Account?",
+                      "Already have an Account?",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Registration(),
+                            builder: (context) => LoginPage(),
                           ),
                         );
                       },
                       child: Text(
-                        "Sign Up",
+                        "Sign In",
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
