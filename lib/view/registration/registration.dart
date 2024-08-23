@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:validation_wrk/main.dart';
 import 'package:validation_wrk/view/login_page/login_page.dart';
 
 class Registration extends StatefulWidget {
@@ -12,6 +13,8 @@ final _formKey = GlobalKey<FormState>();
 final _emailController = TextEditingController();
 final _passwordController = TextEditingController();
 final _confirmPasswordController = TextEditingController();
+bool passwordVisbile = false;
+bool confirmPasswordVisbile = false;
 
 class _RegistrationState extends State<Registration> {
   @override
@@ -71,7 +74,7 @@ class _RegistrationState extends State<Registration> {
                     Expanded(
                       child: TextFormField(
                         controller: _passwordController,
-                        obscureText: true,
+                        obscureText: passwordVisbile,
                         decoration: InputDecoration(
                           labelText: "Your Password",
                           labelStyle: TextStyle(color: Colors.black54),
@@ -79,9 +82,15 @@ class _RegistrationState extends State<Registration> {
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.black38),
                           ),
-                          suffixIcon: Icon(
-                            Icons.visibility_off_outlined,
-                            color: Colors.black38,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                passwordVisbile = !passwordVisbile;
+                              });
+                            },
+                            icon: Icon(passwordVisbile
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined),
                           ),
                         ),
                         validator: (value) {
@@ -107,7 +116,7 @@ class _RegistrationState extends State<Registration> {
                     Expanded(
                       child: TextFormField(
                         controller: _confirmPasswordController,
-                        obscureText: true,
+                        obscureText: confirmPasswordVisbile,
                         decoration: InputDecoration(
                           labelText: "Your Confirm Password",
                           labelStyle: TextStyle(color: Colors.black54),
@@ -115,9 +124,16 @@ class _RegistrationState extends State<Registration> {
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.black38),
                           ),
-                          suffixIcon: Icon(
-                            Icons.visibility_off_outlined,
-                            color: Colors.black38,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                confirmPasswordVisbile =
+                                    !confirmPasswordVisbile;
+                              });
+                            },
+                            icon: Icon(confirmPasswordVisbile
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined),
                           ),
                         ),
                         validator: (value) {
@@ -152,7 +168,17 @@ class _RegistrationState extends State<Registration> {
                     ),
                   ),
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
+                    setState(() {});
+                    if (_formKey.currentState!.validate()) {
+                      email = _emailController.text;
+                      password = _confirmPasswordController.text;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                    }
                   },
                   child: Text(
                     "Sign Up",

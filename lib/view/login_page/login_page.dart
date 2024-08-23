@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:validation_wrk/main.dart';
+import 'package:validation_wrk/view/homescreen/home_screen.dart';
 import 'package:validation_wrk/view/registration/registration.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +13,7 @@ class LoginPage extends StatefulWidget {
 final _formKey = GlobalKey<FormState>();
 final _emailController = TextEditingController();
 final _passwordController = TextEditingController();
+bool passwordVisible = false;
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -76,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                     Expanded(
                       child: TextFormField(
                         controller: _passwordController,
-                        obscureText: true,
+                        obscureText: passwordVisible,
                         decoration: InputDecoration(
                           labelText: "Your Password",
                           labelStyle: TextStyle(color: Colors.black54),
@@ -84,9 +87,15 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.black38),
                           ),
-                          suffixIcon: Icon(
-                            Icons.visibility_off_outlined,
-                            color: Colors.black38,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                              });
+                            },
+                            icon: Icon(passwordVisible
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined),
                           ),
                         ),
                         validator: (value) {
@@ -142,7 +151,33 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
+                    setState(() {});
+                    if (_formKey.currentState!.validate()) {
+                      if (_emailController.text == email &&
+                          _passwordController.text == password) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomeScreen(),
+                          ),
+                        );
+                      } else {
+                        if (_passwordController.text != password) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Invalid Password"),
+                            ),
+                          );
+                        }
+                      }
+                    }
+                    if (_emailController.text != email) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Invalid Email"),
+                        ),
+                      );
+                    }
                   },
                   child: Text(
                     "Sign in",
