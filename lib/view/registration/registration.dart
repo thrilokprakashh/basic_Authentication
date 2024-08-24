@@ -13,8 +13,8 @@ final _formKey = GlobalKey<FormState>();
 final _emailController = TextEditingController();
 final _passwordController = TextEditingController();
 final _confirmPasswordController = TextEditingController();
-bool passwordVisbile = false;
-bool confirmPasswordVisbile = false;
+bool passwordVisbile = true;
+bool confirmPasswordVisbile = true;
 
 class _RegistrationState extends State<Registration> {
   @override

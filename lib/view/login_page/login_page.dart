@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:validation_wrk/main.dart';
+import 'package:validation_wrk/view/forgotpassword/forgot_password.dart';
 import 'package:validation_wrk/view/homescreen/home_screen.dart';
 import 'package:validation_wrk/view/registration/registration.dart';
 
@@ -13,7 +14,7 @@ class LoginPage extends StatefulWidget {
 final _formKey = GlobalKey<FormState>();
 final _emailController = TextEditingController();
 final _passwordController = TextEditingController();
-bool passwordVisible = false;
+bool passwordVisible = true;
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -127,10 +128,20 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Spacer(),
-                    Text(
-                      "Forgot Password",
-                      style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.bold),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ForgotPassword(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Forgot Password",
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
