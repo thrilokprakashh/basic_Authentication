@@ -20,13 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-          size: 25,
-        ),
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
