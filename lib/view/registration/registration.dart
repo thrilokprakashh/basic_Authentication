@@ -126,10 +126,12 @@ class _RegistrationState extends State<Registration> {
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
-                              setState(() {
-                                confirmPasswordVisbile =
-                                    !confirmPasswordVisbile;
-                              });
+                              setState(
+                                () {
+                                  confirmPasswordVisbile =
+                                      !confirmPasswordVisbile;
+                                },
+                              );
                             },
                             icon: Icon(confirmPasswordVisbile
                                 ? Icons.visibility_outlined

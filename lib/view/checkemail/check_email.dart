@@ -205,12 +205,13 @@ class _CheckEmailState extends State<CheckEmail> {
                         color: Colors.black54, fontWeight: FontWeight.bold),
                   ),
                   TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Resend email",
-                        style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
-                      ))
+                    onPressed: () {},
+                    child: Text(
+                      "Resend email",
+                      style: TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ],
               )
             ],
