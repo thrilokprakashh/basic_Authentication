@@ -23,7 +23,7 @@ class _RegistrationState extends State<Registration> {
       appBar: AppBar(),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           child: Form(
             key: _formKey,
             child: Column(
@@ -39,119 +39,100 @@ class _RegistrationState extends State<Registration> {
                 SizedBox(
                   height: 50,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          labelText: "Your Email Address",
-                          labelStyle: TextStyle(color: Colors.black54),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Colors.black38)),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          {
-                            if (!value.contains('@')) {
-                              return 'Please enter a valid email address';
-                            }
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: "Your Email Address",
+                    labelStyle: TextStyle(color: Colors.black54),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: Colors.black38)),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    {
+                      if (!value.contains('@')) {
+                        return 'Please enter a valid email address';
+                      }
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 30,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _passwordController,
-                        obscureText: passwordVisbile,
-                        decoration: InputDecoration(
-                          labelText: "Your Password",
-                          labelStyle: TextStyle(color: Colors.black54),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.black38),
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                passwordVisbile = !passwordVisbile;
-                              });
-                            },
-                            icon: Icon(passwordVisbile
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          {
-                            if (value.length < 8) {
-                              return 'Password must be at least 8 characters';
-                            }
-                          }
-                          return null;
-                        },
-                      ),
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: passwordVisbile,
+                  decoration: InputDecoration(
+                    labelText: "Your Password",
+                    labelStyle: TextStyle(color: Colors.black54),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.black38),
                     ),
-                  ],
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          passwordVisbile = !passwordVisbile;
+                        });
+                      },
+                      icon: Icon(passwordVisbile
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    {
+                      if (value.length < 8) {
+                        return 'Password must be at least 8 characters';
+                      }
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 30,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _confirmPasswordController,
-                        obscureText: confirmPasswordVisbile,
-                        decoration: InputDecoration(
-                          labelText: "Your Confirm Password",
-                          labelStyle: TextStyle(color: Colors.black54),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.black38),
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(
-                                () {
-                                  confirmPasswordVisbile =
-                                      !confirmPasswordVisbile;
-                                },
-                              );
-                            },
-                            icon: Icon(confirmPasswordVisbile
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          {
-                            if (value != _passwordController.text) {
-                              return 'Mismatched';
-                            }
-                          }
-                          return null;
-                        },
-                      ),
+                TextFormField(
+                  controller: _confirmPasswordController,
+                  obscureText: confirmPasswordVisbile,
+                  decoration: InputDecoration(
+                    labelText: "Your Confirm Password",
+                    labelStyle: TextStyle(color: Colors.black54),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.black38),
                     ),
-                  ],
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(
+                          () {
+                            confirmPasswordVisbile = !confirmPasswordVisbile;
+                          },
+                        );
+                      },
+                      icon: Icon(confirmPasswordVisbile
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    {
+                      if (value != _passwordController.text) {
+                        return 'Mismatched';
+                      }
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 40,

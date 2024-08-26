@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           child: Form(
             key: _formKey,
             child: Column(
