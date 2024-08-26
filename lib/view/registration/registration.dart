@@ -10,9 +10,9 @@ class Registration extends StatefulWidget {
 }
 
 final _formKey = GlobalKey<FormState>();
-final _emailController = TextEditingController();
-final _passwordController = TextEditingController();
-final _confirmPasswordController = TextEditingController();
+TextEditingController _emailController = TextEditingController();
+TextEditingController _passwordController = TextEditingController();
+TextEditingController _confirmPasswordController = TextEditingController();
 bool passwordVisbile = true;
 bool confirmPasswordVisbile = true;
 
@@ -197,19 +197,14 @@ class _RegistrationState extends State<Registration> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginPage(),
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                       child: Text(
                         "Sign In",
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
-                    )
+                    ),
                   ],
                 )
               ],

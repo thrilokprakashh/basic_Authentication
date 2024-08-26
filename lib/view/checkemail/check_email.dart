@@ -11,7 +11,7 @@ class CheckEmail extends StatefulWidget {
 }
 
 final _formKey = GlobalKey<FormState>();
-final _otpController = TextEditingController();
+TextEditingController _otpController = TextEditingController();
 
 class _CheckEmailState extends State<CheckEmail> {
   @override

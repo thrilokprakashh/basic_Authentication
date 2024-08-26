@@ -12,8 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 final _formKey = GlobalKey<FormState>();
-final _emailController = TextEditingController();
-final _passwordController = TextEditingController();
+TextEditingController _emailController = TextEditingController();
+TextEditingController _passwordController = TextEditingController();
 bool passwordVisible = true;
 
 class _LoginPageState extends State<LoginPage> {
@@ -160,11 +160,12 @@ class _LoginPageState extends State<LoginPage> {
                     if (_formKey.currentState!.validate()) {
                       if (_emailController.text == email &&
                           _passwordController.text == password) {
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                             builder: (context) => HomeScreen(),
                           ),
+                          (route) => false,
                         );
                       } else {
                         if (_passwordController.text != password) {

@@ -9,7 +9,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 final _formKey = GlobalKey<FormState>();
-final _emailController = TextEditingController();
+TextEditingController _emailController = TextEditingController();
 String checkEmail = "";
 
 class _ForgotPasswordState extends State<ForgotPassword> {
