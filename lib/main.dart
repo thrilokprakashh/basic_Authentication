@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:validation_wrk/view/login_page/login_page.dart';
 
+// Ensures that plugin services are initialized
 void main() {
   runApp(MyApp());
 }

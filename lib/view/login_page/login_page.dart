@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:validation_wrk/controller/dataBase_controller.dart';
 import 'package:validation_wrk/main.dart';
 import 'package:validation_wrk/view/forgotpassword/forgot_password.dart';
 import 'package:validation_wrk/view/homescreen/home_screen.dart';
@@ -18,6 +19,15 @@ bool passwordVisible = true;
 
 class _LoginPageState extends State<LoginPage> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        await DatabaseController.initsharedPref();
+      },
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
@@ -142,52 +152,58 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 40,
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Colors.blue),
-                    foregroundColor: WidgetStatePropertyAll(Colors.white),
-                    padding: WidgetStatePropertyAll(
-                      EdgeInsets.symmetric(horizontal: 160, vertical: 15),
-                    ),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(Colors.blue),
+                      foregroundColor: WidgetStatePropertyAll(Colors.white),
+                      padding: WidgetStatePropertyAll(
+                        EdgeInsets.symmetric(vertical: 15),
+                      ),
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                     ),
-                  ),
-                  onPressed: () {
-                    setState(() {});
-                    if (_formKey.currentState!.validate()) {
-                      if (_emailController.text == email &&
-                          _passwordController.text == password) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HomeScreen(),
-                          ),
-                          (route) => false,
-                        );
-                      } else {
-                        if (_passwordController.text != password) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Invalid Password"),
+                    onPressed: () async {
+                      setState(() {});
+                      if (_formKey.currentState!.validate()) {
+                        await DatabaseController.Getdata();
+                        final storedEmail = DatabaseController.storedEmail;
+                        final storedPass = DatabaseController.storedPassword;
+                        if (storedEmail == _emailController.text &&
+                            storedPass == _passwordController.text) {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(),
                             ),
+                            (route) => false,
                           );
+                        } else {
+                          if (_passwordController.text != password) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Invalid Password"),
+                              ),
+                            );
+                          }
                         }
                       }
-                    }
-                    if (_emailController.text != email) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Invalid Email"),
-                        ),
-                      );
-                    }
-                  },
-                  child: Text(
-                    "Sign in",
-                    style: TextStyle(fontSize: 15),
+                      if (_emailController.text != email) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Invalid Email"),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text(
+                      "Sign in",
+                      style: TextStyle(fontSize: 15),
+                    ),
                   ),
                 ),
                 Spacer(),

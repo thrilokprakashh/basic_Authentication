@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:validation_wrk/main.dart';
+import 'package:validation_wrk/controller/dataBase_controller.dart';
+
 import 'package:validation_wrk/view/login_page/login_page.dart';
 
 class Registration extends StatefulWidget {
@@ -18,6 +19,15 @@ bool confirmPasswordVisbile = true;
 
 class _RegistrationState extends State<Registration> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        await DatabaseController.initsharedPref();
+      },
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
@@ -137,35 +147,39 @@ class _RegistrationState extends State<Registration> {
                 SizedBox(
                   height: 40,
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Colors.blue),
-                    foregroundColor: WidgetStatePropertyAll(Colors.white),
-                    padding: WidgetStatePropertyAll(
-                      EdgeInsets.symmetric(horizontal: 156, vertical: 15),
-                    ),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(Colors.blue),
+                      foregroundColor: WidgetStatePropertyAll(Colors.white),
+                      padding: WidgetStatePropertyAll(
+                        EdgeInsets.symmetric(vertical: 15),
+                      ),
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                     ),
-                  ),
-                  onPressed: () {
-                    setState(() {});
-                    if (_formKey.currentState!.validate()) {
-                      email = _emailController.text;
-                      password = _confirmPasswordController.text;
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginPage(),
-                        ),
-                      );
-                    }
-                  },
-                  child: Text(
-                    "Sign Up",
-                    style: TextStyle(fontSize: 15),
+                    onPressed: () {
+                      setState(() {});
+                      if (_formKey.currentState!.validate()) {
+                        DatabaseController.register(
+                            _emailController.text, _passwordController.text);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginPage(),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(fontSize: 15),
+                    ),
                   ),
                 ),
                 Spacer(),
